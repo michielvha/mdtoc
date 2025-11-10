@@ -41,13 +41,13 @@ jobs:
           pgp-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
 
       # 4: Build and Push Docker image
-      - name: Build and Push Docker Image
-        uses: michielvha/docker-release-action@main
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          project: ${{ github.event.repository.name }}
-          version: ${{ steps.gitversion.outputs.semVer }}
-          platforms: 'linux/amd64,linux/arm64'
-          context: '.'
+      # - name: Build and Push Docker Image
+      #   uses: michielvha/docker-release-action@main
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      #     project: ${{ github.event.repository.name }}
+      #     version: ${{ steps.gitversion.outputs.semVer }}
+      #     platforms: 'linux/amd64,linux/arm64'
+      #     context: '.'
