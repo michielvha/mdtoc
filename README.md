@@ -69,12 +69,15 @@ go install
 
 ## Dependencies
 
-- The pipeline requires to add a `PGP_PRIVATE_KEY` in the repository secrets
+- The pipeline needs the `PGP_PRIVATE_KEY` secret, plus the release App's
+  `RELEASE_APP_CLIENT_ID` variable and `RELEASE_APP_PRIVATE_KEY` secret to push tags.
 - The `project_name` in the [.goreleaser.yml](.goreleaser.yml) file should be set to match your repo name.
 
 
 ## Features
 
-- Automated versioning with GitVersion, using tags like `0.0.0`.
-- Automated container release via custom action, defaults to `ghcr.io`.
-- Automated binary release using goreleaser, with signature & multi arch support.
+- CI on every branch push: formatting, tidy modules, vet, tests, build and lint.
+- Versions from GitVersion, tagged like `v0.0.0` after CI passes on `main`. A PR
+  labelled `release:preview` gets a prerelease for each push.
+- Signed multi-arch binary releases with GoReleaser, published from the tag.
+  See [.github/workflows](.github/workflows).
