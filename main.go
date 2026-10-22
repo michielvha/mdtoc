@@ -77,7 +77,7 @@ func generateTOC(rootDir, outputFile string) error {
 	// Write to output file
 	outputPath := filepath.Join(rootDir, outputFile)
 	content := strings.Join(lines, "\n")
-	if err := os.WriteFile(outputPath, []byte(content), 0644); err != nil {
+	if err := os.WriteFile(outputPath, []byte(content), 0o644); err != nil {
 		return fmt.Errorf("failed to write output file: %w", err)
 	}
 
@@ -89,7 +89,8 @@ func extractTitle(filepath string) string {
 	if err != nil {
 		return filenameToTitle(filepath)
 	}
-	defer file.Close()
+	// Read only: a close error cannot lose data.
+	defer func() { _ = file.Close() }()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
