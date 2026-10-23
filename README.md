@@ -59,6 +59,25 @@ go build -o mdtoc main.go
 go install
 ```
 
+### Verify a release
+
+Each release from `v0.1.4` on publishes `mdtoc_<version>_SHA256SUMS` and its detached signature
+`mdtoc_<version>_SHA256SUMS.sig`, made with the VHCO Pro release signing key. The public key is
+[`release-signing-key.asc`](release-signing-key.asc), and its primary fingerprint is:
+
+```text
+9A5CD8F7CF9617B1C57F359ED61B8A7F2C06BAB6
+```
+
+```sh
+gpg --import release-signing-key.asc
+gpg --fingerprint release@vhco.pro
+gpg --verify mdtoc_<version>_SHA256SUMS.sig mdtoc_<version>_SHA256SUMS
+shasum -a 256 --check --ignore-missing mdtoc_<version>_SHA256SUMS
+```
+
+Releases up to `v0.1.3` were signed with an earlier key, `D01A25146CB3BA4B0F3B5456EFD2D04A9FC214C0`.
+
 ## How It Works
 
 1. Scans the specified directory for subdirectories (ignores hidden folders starting with `.`)
